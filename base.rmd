@@ -1,0 +1,117 @@
+---
+title: "contour()"
+author: "Kyle Brewster"
+output:
+  slidy_presentation: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# A Simple Example
+<body style="background-color:LightGray;">
+
+```{r}
+x <- -10:10
+y <- -10:10
+z <- sqrt(outer(x ^ 2, y ^ 2, "+"))
+
+contour(x,y,z)
+```
+
+# Example with Data 
+
+Using base `volcano` data set containing data on Auckland's (NZ) Maungawhau Volcano (Mt. Eden)
+- provides volcano height in 10x10 meter grids
+
+```{r message=FALSE, warning=FALSE}
+tibble::as.tibble(volcano)
+```
+
+# Using the basic plot
+
+```{r}
+contour(volcano)
+```
+
+# Adjusting size and style of contour lines
+
+```{r}
+contour(volcano,
+        lwd = 2,
+        lty = 8)
+```
+
+# Assign different labels
+
+```{r}
+contour(volcano,
+        lwd = 2,
+        lty = 8,
+        labels = c("A","B","C","D"))
+```
+
+
+# Changing contour label text size
+
+```{r}
+contour(volcano,
+        lwd = 3,
+        lty = 5,
+        labels = c("A","B","C","D"),
+        labcex = 1)
+```
+
+# Or removing the labels altogether
+
+```{r}
+contour(volcano,
+        lwd = 3,
+        lty = 5,
+        drawlabels = F)
+```
+
+# And removing the frame and axes
+
+```{r}
+contour(volcano,
+        lwd = 3,
+        lty = 5,
+        drawlabels = F,
+        frame.plot = F,
+        axes = F)
+```
+
+# Can also create a filled contour mapping
+```{r}
+filled.contour(volcano)
+```
+
+# Define the number of levels
+```{r}
+filled.contour(volcano,
+               nlevels = 30)
+```
+
+# Modify color schemes
+```{r}
+filled.contour(volcano,
+               nlevels = 30,
+               color.palette = terrain.colors)
+```
+
+# Adding contour line over the filled contour
+```{r}
+
+filled.contour(volcano,
+               nlevels = 30,
+               color.palette = terrain.colors,
+               plot.axes = {
+                   axis(1)
+                   axis(2)
+                   contour(volcano, add = TRUE, lwd = 2)
+               })
+```
+
+
+
